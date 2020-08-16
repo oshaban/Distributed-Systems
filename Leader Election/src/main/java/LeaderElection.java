@@ -1,7 +1,6 @@
 import org.apache.zookeeper.*;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -16,11 +15,18 @@ public class LeaderElection implements Watcher {
     public static void main(String[] args) throws IOException, InterruptedException, KeeperException {
         LeaderElection leaderElection = new LeaderElection();
         leaderElection.connectToZookeeper();
+        leaderElection.createElectionZnode();
         leaderElection.volunteerForLeadership();
         leaderElection.electLeader();
         leaderElection.run();
         leaderElection.close();
         System.out.println("Disconnected from Zookeeper, exiting application");
+    }
+
+    public void createElectionZnode() throws KeeperException, InterruptedException {
+        if (zooKeeper.exists(ELECTION_NAMESPACE, false) == null) {
+            zooKeeper.create(ELECTION_NAMESPACE, new byte[]{}, ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
+        }
     }
 
     public void volunteerForLeadership() throws KeeperException, InterruptedException {
