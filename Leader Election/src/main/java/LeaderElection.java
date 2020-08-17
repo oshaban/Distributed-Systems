@@ -1,4 +1,6 @@
-package fault_tolerant_elect_leader;
+/**
+ * Leader Reelection Implementation
+ */
 
 import org.apache.zookeeper.*;
 import org.apache.zookeeper.data.Stat;
@@ -18,18 +20,11 @@ public class LeaderElection implements Watcher {
     public static void main(String[] args) throws IOException, InterruptedException, KeeperException {
         LeaderElection leaderElection = new LeaderElection();
         leaderElection.connectToZookeeper();
-        leaderElection.createElectionZnode();
         leaderElection.volunteerForLeadership();
         leaderElection.reelectLeader();
         leaderElection.run();
         leaderElection.close();
         System.out.println("Disconnected from Zookeeper, exiting application");
-    }
-
-    public void createElectionZnode() throws KeeperException, InterruptedException {
-        if (zooKeeper.exists(ELECTION_NAMESPACE, false) == null) {
-            zooKeeper.create(ELECTION_NAMESPACE, new byte[]{}, ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
-        }
     }
 
     public void volunteerForLeadership() throws KeeperException, InterruptedException {
@@ -44,29 +39,27 @@ public class LeaderElection implements Watcher {
      * Re-elects a znode to be the leader node
      */
     public void reelectLeader() throws KeeperException, InterruptedException {
-        Stat predecssorStat = null;
+        Stat predecessorStat = null;
         String predecessorZnodeName = "";
-
-        while (predecssorStat == null) {
-
-            List<String> children = this.zooKeeper.getChildren(ELECTION_NAMESPACE, false);
+        while (predecessorStat == null) {
+            List<String> children = zooKeeper.getChildren(ELECTION_NAMESPACE, false);
 
             Collections.sort(children);
-            String smallestChildren = children.get(0);
+            String smallestChild = children.get(0);
 
-            if (smallestChildren.equals(currentZnodeName)) {
+            if (smallestChild.equals(currentZnodeName)) {
                 System.out.println("I am the leader");
                 return;
             } else {
                 System.out.println("I am not the leader");
-                // Make the current node watch the node before it
                 int predecessorIndex = Collections.binarySearch(children, currentZnodeName) - 1;
                 predecessorZnodeName = children.get(predecessorIndex);
-                predecssorStat = this.zooKeeper.exists(ELECTION_NAMESPACE + "/" + predecessorZnodeName, this);
+                predecessorStat = zooKeeper.exists(ELECTION_NAMESPACE + "/" + predecessorZnodeName, this);
             }
         }
-        System.out.println("Wathcing znode " + predecessorZnodeName);
-        System.out.println("");
+
+        System.out.println("Watching znode " + predecessorZnodeName);
+        System.out.println();
     }
 
     /**
@@ -101,17 +94,16 @@ public class LeaderElection implements Watcher {
     /**
      * Handles ZooKeeper events
      *
-     * @param watchedEvent
+     * @param event
      */
     @Override
-    public void process(WatchedEvent watchedEvent) {
-        switch (watchedEvent.getType()) {
+    public void process(WatchedEvent event) {
+        switch (event.getType()) {
             case None:
-                if (watchedEvent.getState() == Event.KeeperState.SyncConnected) {
+                if (event.getState() == Event.KeeperState.SyncConnected) {
                     System.out.println("Successfully connected to Zookeeper");
                 } else {
-                    // Wakes up the main thread and closes resources
-                    synchronized (this.zooKeeper) {
+                    synchronized (zooKeeper) {
                         System.out.println("Disconnected from Zookeeper event");
                         zooKeeper.notifyAll();
                     }
@@ -119,10 +111,8 @@ public class LeaderElection implements Watcher {
             case NodeDeleted:
                 try {
                     reelectLeader();
-                } catch (KeeperException e) {
-                    e.printStackTrace();
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                } catch (KeeperException e) {
                 }
         }
     }
