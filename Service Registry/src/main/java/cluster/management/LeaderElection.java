@@ -12,9 +12,11 @@ public class LeaderElection implements Watcher {
     private static final int SESSION_TIMEOUT = 3000;
     private static final String ELECTION_NAMESPACE = "/election";
     private String currentZnodeName;
+    private final OnElectionCallback onElectionCallback;
 
-    public LeaderElection(ZooKeeper zooKeeper) {
+    public LeaderElection(ZooKeeper zooKeeper, OnElectionCallback onElectionCallback) {
         this.zooKeeper = zooKeeper;
+        this.onElectionCallback = onElectionCallback;
     }
 
     public void volunteerForLeadership() throws KeeperException, InterruptedException {
@@ -39,12 +41,14 @@ public class LeaderElection implements Watcher {
 
             if (smallestChild.equals(currentZnodeName)) {
                 System.out.println("I am the leader");
+                onElectionCallback.onElectedToBeLeader(); // Calls the callback fcn
                 return;
             } else {
                 System.out.println("I am not the leader");
                 int predecessorIndex = Collections.binarySearch(children, currentZnodeName) - 1;
                 predecessorZnodeName = children.get(predecessorIndex);
                 predecessorStat = zooKeeper.exists(ELECTION_NAMESPACE + "/" + predecessorZnodeName, this);
+                onElectionCallback.onWorker(); // Calls the callback fcn
             }
         }
 
