@@ -23,7 +23,6 @@
  */
 
 import org.apache.kafka.clients.consumer.*;
-import org.apache.kafka.common.serialization.LongDeserializer;
 import org.apache.kafka.common.serialization.StringDeserializer;
 
 import java.time.Duration;
@@ -45,19 +44,27 @@ public class Application {
     }
 
     public static void consumeMessages(String topic, Consumer<String, Transaction> kafkaConsumer) {
-        /**
-         * Fill in the code here to subscribe to the right topic.
-         * Run in a loop and read incoming transactions
-         * For each new transaction, send a notification to the user
-         */
+
+        kafkaConsumer.subscribe(Collections.singletonList(topic));
+
+        while (true) {
+            ConsumerRecords<String, Transaction> records = kafkaConsumer.poll(Duration.ofSeconds(1L));
+
+            for (ConsumerRecord<String, Transaction> record : records) {
+                sendUserNotification(record.value());
+            }
+
+            kafkaConsumer.commitAsync();
+        }
     }
 
     public static Consumer<String, Transaction> createKafkaConsumer(String bootstrapServers, String consumerGroup) {
         Properties properties = new Properties();
 
-        /**
-         * Fill in the code here to configure the rest of the Kafka client parameters
-         */
+        properties.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
+        properties.put(ConsumerConfig.GROUP_ID_CONFIG, consumerGroup);
+        properties.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+        properties.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, Transaction.TransactionDeserializer.class);
         properties.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, true);
 
         return new KafkaConsumer<>(properties);
