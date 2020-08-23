@@ -47,11 +47,12 @@ public class Application {
         kafkaConsumer.subscribe(Collections.singletonList(topic));
 
         while (true) {
-            /**
-             * Fill in the code here
-             * Check if there are new transaction to read from Kafka.
-             * Approve the incoming transactions
-             */
+
+            ConsumerRecords<String, Transaction> records = kafkaConsumer.poll(Duration.ofSeconds(1L));
+
+            for (ConsumerRecord<String, Transaction> record : records) {
+                approveTransaction(record.value());
+            }
 
             kafkaConsumer.commitAsync();
         }
@@ -60,10 +61,10 @@ public class Application {
     public static Consumer<String, Transaction> createKafkaConsumer(String bootstrapServers, String consumerGroup) {
         Properties properties = new Properties();
 
-        properties.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, /** Fill in your code here **/);
-        properties.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, /** Fill in your code here **/);
-        properties.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, /** Fill in your code here **/);
-        properties.put(ConsumerConfig.GROUP_ID_CONFIG, /** Fill in your code here **/);
+        properties.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
+        properties.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+        properties.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, Transaction.TransactionDeserializer.class);
+        properties.put(ConsumerConfig.GROUP_ID_CONFIG, consumerGroup);
         properties.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, false);
 
         return new KafkaConsumer<>(properties);
