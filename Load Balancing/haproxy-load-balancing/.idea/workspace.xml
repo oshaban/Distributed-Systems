@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="9abcc799-e6a7-4fa7-87f8-49637fab1449" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/webapp/src/main/java/com/oshaban/haproxyexample/controllers/HealthCheckController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/haproxy/dockerfile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/haproxy/haproxy.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/haproxy/haproxy.cfg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webapp/dockerfile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/webapp/src/main/java/com/oshaban/haproxyexample/controllers/GreetingController.java" beforeDir="false" afterPath="$PROJECT_DIR$/webapp/src/main/java/com/oshaban/haproxyexample/controllers/GreetingController.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CodeStyleSettingsInfer">
+    <option name="done" value="true" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="IgnoredFileRootStore">
+    <option name="generatedRoots">
+      <set>
+        <option value="$PROJECT_DIR$/.idea" />
+      </set>
+    </option>
+  </component>
+  <component name="ProjectCodeStyleSettingsMigration">
+    <option name="version" value="1" />
+  </component>
+  <component name="ProjectId" id="1hdbVFC3mECSbF15lwWuwVpvKrF" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/haproxy" />
+    <property name="project.structure.last.edited" value="Problems" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.4" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/haproxy" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
+  </component>
+  <component name="SbtLocalSettings">
+    <option name="projectSyncType">
+      <map>
+        <entry key="$USER_HOME$" value="PREVIEW" />
+        <entry key="$USER_HOME$/Desktop/energywatch-portal-qa" value="PREVIEW" />
+        <entry key="$PROJECT_DIR$/../../../../herokuqa/watchwire-qa" value="PREVIEW" />
+        <entry key="$PROJECT_DIR$/../../../../herokustaging/watchwire-staging" value="PREVIEW" />
+        <entry key="$PROJECT_DIR$/../../../../herokutest/watchwire-qa" value="PREVIEW" />
+        <entry key="$PROJECT_DIR$/../../../../staging-test/watchwire-staging" value="PREVIEW" />
+        <entry key="$PROJECT_DIR$/../../../../testingqa/watchwire-qa" value="PREVIEW" />
+      </map>
+    </option>
+  </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="9abcc799-e6a7-4fa7-87f8-49637fab1449" name="Default Changelist" comment="" />
+      <created>1600343937317</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1600343937317</updated>
+      <workItem from="1600343939241" duration="3349000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="1374" y="519" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1600346833202">
+      <screen x="0" y="0" width="2560" height="1440" />
+    </state>
+    <state x="1374" y="519" key="#com.intellij.fileTypes.FileTypeChooser/-1920.0.1920.1080/0.0.2560.1440/-3600.0.1680.1050@0.0.2560.1440" timestamp="1600346833202" />
+  </component>
+</project>
