@@ -23,3 +23,5 @@ To start the HAProxy Server:
 haproxy -f haproxy/haproxy.cfg
 ```
 
+To access the HAProxy Load Balancer/Gateway:
+- Go to your web-browser: localhost:80
